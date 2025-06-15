@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.no-zoom {
+    touch-action: manipulation;
+}
+
+body {
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    align-content: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgb(116, 247, 116), rgb(147, 119, 180));
+}
+
+#app-container {
+    position: relative;
+    width: 80%;
+    max-width: 1200px;
+    aspect-ratio: 1.5/1;
+    margin: auto;
+    background-image: url("./assets/img/background.webp");
+    background-size: 100% 110%;
+    box-shadow: 0 0 20px 2px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 800px) {
+    #app-container {
+        width: 95%;
+    }
+}
+
+/***** Controls *****/
+
+#controls {
+    display: inline-block;
+    position: absolute;
+    top: 20%;
+    left: 1%;
+    width: 9rem;
+    height: 6rem;
+    color: white;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1;
+}
+
+#controls h4 {
+    text-align: center;
+}
+
+#controls p {
+    margin-left: 10px;
+}
+
+#controls span {
+    position: absolute;
+    right: 10px;
+}
+
+/***** Score *****/
+
+#score {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    font-size: 2rem;
+    padding: 0.1rem 0.6rem;
+    z-index: 1;
+}
+
+/***** GameOver *****/
+
+#game-over {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+    color: red;
+    background-color: rgba(0,0,0,0.8);
+    font-size: 2rem;
+    padding: 0.2rem 1rem;
+}
+
+/***** PLAYER *****/
+
+#flappy-ball {
+    border: 1px solid black;
+    box-shadow: 0 0 2px;
+    width: 6%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: yellow;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.eye {
+    position: absolute;
+    width: 20%;
+    aspect-ratio: 2/1;
+    border-radius: 50%;
+    border: 1px solid black;
+    top: 35%;
+    background-color: white;
+}
+
+.eye.left {
+    left: 25%;
+}
+
+.eye.right {
+    right: 15%;
+}
+
+.pupil {
+    background-color: black;
+    height: 100%;
+    width: 30%;
+    border-radius: 50%;
+    position: absolute;
+    right: 20%;
+}
+
+.mouth {
+    position: absolute;
+    width: 40%;
+    aspect-ratio: 10/1;
+    border-radius: 50%;
+    border: 1px solid black;
+    bottom: 20%;
+    left: 35%;
+    background-color: red;
+}
+
+/***** Pillars *****/
+
+.pillar {
+    position: absolute;
+    background-color: green;
+    border: 2px solid black;
+}

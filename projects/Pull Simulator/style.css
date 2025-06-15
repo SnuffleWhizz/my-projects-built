@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-image: url("./images/background.JPG");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: arial, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  height: 120dvh;
+}
+
+#heading {
+  text-align: center;
+  padding-top: 25px;
+  color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+#appcontainer {
+  background-color: rgba(0,0,0,0.7);
+  outline: solid 2px;
+  outline-color: black;
+  display: inline-block;
+  text-align: left;
+  width: 80vw;
+  max-width: 800px;
+  aspect-ratio: 2 / 1.5;
+  overflow: hidden;
+  box-shadow: 0 0 10px black;
+}
+
+#inside-heading {
+  color: chocolate;
+  font-size: 16px;
+  text-align: center;
+  position: sticky;
+  top: 3%;
+}
+
+.flex-container {
+  display: block;
+  height: 25%;
+  width: 90%;
+  margin: auto;
+  text-align: center;
+}
+
+#first-row {
+  margin-top: 5%;
+}
+
+#second-row {
+  margin-top: 10%;
+}
+
+#first-row div {
+  position: relative;
+  top: -200%;
+}
+
+#second-row div {
+  position: relative;
+  bottom: -200%;
+}
+
+.flex-container div {
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+}
+
+.flex-container div img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: 0%;
+  bottom: 0%;
+  cursor: pointer;
+}
+
+#pull-button {
+  display: inline-block;
+  width: 10%;
+  max-width: 80px;
+  aspect-ratio: 5 / 2;
+  border: solid 2px;
+  border-color: black;
+  border-radius: 25%;
+  user-select: none;
+  text-align: center;
+  font-weight: bold;
+  font-size: min(3dvw, 24px);
+  padding: auto;
+  color: black;
+  background-color: white;
+}
+
+#pull-counter {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+  font-size: min(3dvw,20px);
+  width: fit-content;
+  aspect-ratio: 3 / 1;
+  text-shadow: 0 0 5px black;
+}
+
+#pull-counter-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#pull-button:hover {
+  background-color: rgba(61, 242, 255, 0.7);
+  color: red;
+  width: 55px;
+  height: 22px;
+  transition: 50ms;
+  cursor: pointer;
+}
