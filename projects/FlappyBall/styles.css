@@ -95,6 +95,25 @@ body {
     padding: 0.2rem 1rem;
 }
 
+#game-over button {
+    position: relative;
+    transform: translate(-50%,0);
+    left: 50%;
+    padding: 2px 5px;
+    font-size: 1.2rem;
+    background-color: orangered;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#game-over button:hover {
+    background-color: orange;
+    box-shadow: white 0 0 3px;
+    cursor: pointer;
+}
+
 /***** PLAYER *****/
 
 #flappy-ball {

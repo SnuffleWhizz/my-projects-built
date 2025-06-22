@@ -219,13 +219,6 @@ addEventListener("keydown", event => {
     }
 });
 
-addEventListener("click", event => {
-    if (!game_active) {
-        startGame();
-    }
-    jump();
-});
-
 addEventListener("touchstart", () => {
     if (!game_active) {
         startGame();
