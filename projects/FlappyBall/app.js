@@ -208,9 +208,7 @@ function startGame() {
 
 addEventListener("keydown", event => {
     if (event.code == "Space") {
-        if (!game_active) {
-            startGame();
-        }
+        !game_active && startGame();
         jump();
     } else if (stopped && event.code == "Enter") {
         reload();
@@ -219,13 +217,16 @@ addEventListener("keydown", event => {
     }
 });
 
+addEventListener('click', e => {
+    e.target.id == 'restart-btn' && reload();
+})
+
 addEventListener("touchstart", () => {
-    if (!game_active) {
-        startGame();
-    }
+    !game_active && startGame();
     jump();
 })
 
 addEventListener('touchend', e => {
-  e.preventDefault();
-});
+    e.preventDefault();
+    e.target.id == 'restart-btn' && reload();
+})
