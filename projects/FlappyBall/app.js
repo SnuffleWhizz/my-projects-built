@@ -61,7 +61,7 @@ async function updateScore() {
         for (let i = 0; i < pillars.length; i++) {
             const pilBounds = pillars[i].getBoundingClientRect();
             if((pilBounds.right-pilBounds.width/2) < (appContainerBounds.right-appContainerBounds.width/2)
-            && (pilBounds.right-pilBounds.width/2) > (appContainerBounds.right-appContainerBounds.width/2) - 3) {
+            && (pilBounds.right-pilBounds.width/2) > (appContainerBounds.right-appContainerBounds.width/2) - 2) {
                 const score = document.getElementById("score");
                 score.innerHTML = parseInt(score.innerText) + 1
                 await delay(1);
@@ -219,6 +219,7 @@ addEventListener("keydown", event => {
 
 addEventListener('click', e => {
     e.target.id == 'restart-btn' && reload();
+    e.target.id == 'X-btn' && toggleControls();
 })
 
 addEventListener("touchstart", () => {
@@ -229,4 +230,5 @@ addEventListener("touchstart", () => {
 addEventListener('touchend', e => {
     e.preventDefault();
     e.target.id == 'restart-btn' && reload();
+    e.target.id == 'X-btn' && toggleControls();
 })
