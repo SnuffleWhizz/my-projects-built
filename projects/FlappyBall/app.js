@@ -1,21 +1,20 @@
 const appContainer = document.getElementById("app-container");
-const appContainerBounds = appContainer.getBoundingClientRect();
 const flappyBall = document.getElementById("flappy-ball");
 const controls = document.getElementById("controls");
-controls.style.display = "inline-block";
+let controlsOn = true;
 
 // Constants of the game (Game Rules)
 const gravity_force = 0.7; // measured in px
 const jump_height = 20; // measured in %
 const jump_speed = 0.6; // measured in seconds per unit
 
-const pillar_gap = 30; // measured in % of appcontainer height
+let pillar_gap = 30; // measured in % of appcontainer height
 const pillar_min_height = 100 - pillar_gap - (100-pillar_gap-10) // determines pillar min height from gap
 const pillar_max_height = 100 - pillar_gap - pillar_min_height // determines pillar max height from gap and min height
 const pillar_width = 10; // measured in % of appcontainer width
 const pillar_delay = 3; // measured in seconds between Pillars
-const pillar_speed = 30; // measured in % of appcontainer width per second
-const pillar_distance = 25 // measured in % of appcontainer width
+let pillar_speed = 30; // measured in % of appcontainer width per second
+let pillar_distance = 25 // measured in % of appcontainer width
 
 // Gamestates
 let collision = false;
@@ -24,12 +23,46 @@ let stopped = false;
 let gravity_stopped = false;
 let first_start = false;
 let firstPillarSpawn = true;
+let score = 0;
+
+function setDifficulty(difficulty) {
+    switch (difficulty) {
+        case 'easy':
+            pillar_gap = 50;
+            pillar_distance = 35;
+            pillar_speed = 20;
+
+            document.getElementById('easy-difficulty').style.backgroundColor = 'green';
+            document.getElementById('medium-difficulty').style.backgroundColor = 'white';
+            document.getElementById('hard-difficulty').style.backgroundColor = 'white';
+            break;
+        case 'medium':
+            pillar_gap = 40;
+            pillar_distance = 30;
+            pillar_speed = 25;
+
+            document.getElementById('easy-difficulty').style.backgroundColor = 'white';
+            document.getElementById('medium-difficulty').style.backgroundColor = 'green';
+            document.getElementById('hard-difficulty').style.backgroundColor = 'white';
+            break;
+        case 'hard':
+            pillar_gap = 30;
+            pillar_distance = 25;
+            pillar_speed = 30;
+
+            document.getElementById('easy-difficulty').style.backgroundColor = 'white';
+            document.getElementById('medium-difficulty').style.backgroundColor = 'white';
+            document.getElementById('hard-difficulty').style.backgroundColor = 'green';
+            break;
+        default:
+            return('Invalid difficulty');
+    }
+}
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time*1000));
 }
 
-// TODO: add GameOver Screen
 function gameOver() {
     game_active = false;
     stopped = true;
@@ -39,40 +72,40 @@ function gameOver() {
 }
 
 function toggleControls() {
-    const on = "inline-block";
-    const off = "none";
-
-    if(controls.style.display == on) {
-        controls.style.display = off;
-    } else if(controls.style.display == off) {
-        controls.style.display = on;
+    if(controlsOn) {
+        controls.style.left = '-100%';
+        controls.style.transition = '1s';
+        controlsOn = false;
+    } else {
+        controls.style.left = '1%';
+        controlsOn = true;
     }
 }
 
 function clearScore() {
-    const score = document.getElementById("score");
-    score.innerHTML = 0;
+    const scoreEl = document.getElementById("score");
+    score = 0;
+    scoreEl.innerHTML = score;
 }
 
 async function updateScore() {
     while (!stopped) {
-        const pillars = Array.from(document.getElementsByClassName("pillar"));
+        const appContainerBounds = appContainer.getBoundingClientRect();
+        const pillars = Array.from(document.getElementsByClassName("pillar-top"));
 
-        for (let i = 0; i < pillars.length; i++) {
-            const pilBounds = pillars[i].getBoundingClientRect();
-            if((pilBounds.right-pilBounds.width/2) < (appContainerBounds.right-appContainerBounds.width/2)
-            && (pilBounds.right-pilBounds.width/2) > (appContainerBounds.right-appContainerBounds.width/2) - 2) {
-                const score = document.getElementById("score");
-                score.innerHTML = parseInt(score.innerText) + 1
-                await delay(1);
+        pillars.map((pillar, _) => {
+            const pilBounds = pillar.getBoundingClientRect();
+            if (!pillar.classList.contains('counted') &&
+                (pilBounds.right-pilBounds.width/2) < (appContainerBounds.right-appContainerBounds.width/2)) {
+                score++;
+                document.getElementById('score').innerHTML = score;
+                pillar.classList.add('counted');
             }
-        }
+        });
         await delay(0.01)
     }
 }
 
-
-// TODO: finish reload functionality
 function reload() {
     collision = false;
     game_active = false;
@@ -97,6 +130,7 @@ function reload() {
 
 async function gravity() {
     while (!stopped && !gravity_stopped) {
+        const appContainerBounds = appContainer.getBoundingClientRect();
         const top = flappyBall.getBoundingClientRect().top
         const bot = flappyBall.getBoundingClientRect().bottom
         const height = flappyBall.getBoundingClientRect().height;
@@ -117,6 +151,7 @@ async function gravity() {
 
 async function jump() {
     if(!stopped) {
+        const appContainerBounds = appContainer.getBoundingClientRect();
         gravity_stopped = true;
         for (let i = 0; i <= jump_speed * 30; i++) {
             flappyBall.style.top = `${parseFloat(flappyBall.style.top)-(appContainerBounds.height * (jump_height / 100) / 30)}px`;
@@ -130,6 +165,7 @@ async function jump() {
 
 async function movePillars() {
     while (!stopped) {
+        const appContainerBounds = appContainer.getBoundingClientRect();
         const pillars = document.getElementsByClassName("pillar");
 
         for (let i = 0; i < pillars.length; i++) {
@@ -147,10 +183,11 @@ async function movePillars() {
 }
 
 function spawnPillarSet() {
+    const appContainerBounds = appContainer.getBoundingClientRect();
     const topPillar = appContainer.appendChild(document.createElement("div"));
-    topPillar.className = "pillar no-zoom";
+    topPillar.className = "pillar pillar-top";
     const bottomPillar = appContainer.appendChild(document.createElement("div"));
-    bottomPillar.className = "pillar no-zoom";
+    bottomPillar.className = "pillar pillar-bottom";
 
     const topPillarHeight = Math.floor(Math.random() * (pillar_max_height - pillar_min_height) + pillar_min_height);
     const bottomPillarHeight = (100 - pillar_gap) - topPillarHeight;
@@ -168,6 +205,7 @@ function spawnPillarSet() {
 
 async function spawnPillars() {
     while(true) {
+        const appContainerBounds = appContainer.getBoundingClientRect();
         const pillars = document.getElementsByClassName("pillar");
         const latestPillar = pillars[pillars.length-1] || null;
         if (firstPillarSpawn || latestPillar.getBoundingClientRect().right < (appContainerBounds.right - appContainerBounds.width * pillar_distance / 100)) {
@@ -206,6 +244,14 @@ function startGame() {
     game_active = true;
 }
 
+function changeDifficulty(event) {
+    event.target.id == 'easy-difficulty' && setDifficulty('easy');
+    event.target.id == 'medium-difficulty' && setDifficulty('medium');
+    event.target.id == 'hard-difficulty' && setDifficulty('hard');
+}
+
+setDifficulty('easy');
+
 addEventListener("keydown", event => {
     if (event.code == "Space") {
         !game_active && startGame();
@@ -220,6 +266,8 @@ addEventListener("keydown", event => {
 addEventListener('click', e => {
     e.target.id == 'restart-btn' && reload();
     e.target.id == 'X-btn' && toggleControls();
+
+    changeDifficulty(e);
 })
 
 addEventListener("touchstart", () => {
@@ -231,4 +279,5 @@ addEventListener('touchend', e => {
     e.preventDefault();
     e.target.id == 'restart-btn' && reload();
     e.target.id == 'X-btn' && toggleControls();
+    changeDifficulty(e);
 })

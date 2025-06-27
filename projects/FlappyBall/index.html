@@ -8,20 +8,28 @@
         <script src="app.js" defer></script>
     </head>
     <body id="body">
-        <div class="no-zoom" id="app-container">
-            <div class="no-zoom" id="controls">
-                <h4 class="no-zoom">Controls</h3>
-                <span id="X-btn" class="no-zoom">X</span>
-                <p class="no-zoom"><strong>Jump</strong><span class="no-zoom">'Space'</span></p>
-                <p class="no-zoom"><strong>Restart</strong><span class="no-zoom">'Enter'</span></p>
-                <p class="no-zoom"><strong>Close</strong><span class="no-zoom">'C'</span></p>
+        <div id="game-settings">
+                <h2>Difficulty</h2>
+                <div id="difficulty">
+                    <button onclick="setDifficulty('easy')" id="easy-difficulty" class="difficulty-button">Easy 💚</button>
+                    <button id="medium-difficulty" class="difficulty-button">Medium 💛</button>
+                    <button id="hard-difficulty" class="difficulty-button">Hard ❤️</button>
+                </div>
+        </div>
+        <div id="app-container">
+            <div class="controls-hidden" id="controls">
+                <h4 >Controls</h3>
+                <span id="X-btn" >X</span>
+                <p><strong>Jump</strong><span>'Space'</span></p>
+                <p><strong>Restart</strong><span>'Enter'</span></p>
+                <p><strong>Close</strong><span>'C'</span></p>
             </div>
-            <span class="no-zoom" id="score">0</span>
-            <span class="no-zoom" id="game-over">Game Over<br><button id="restart-btn">Restart</button></span>
-            <div class="no-zoom" id="flappy-ball">
-                <div class="eye left no-zoom"><div class="pupil no-zoom"></div></div>
-                <div class="eye right no-zoom"><div class="pupil no-zoom"></div></div>
-                <div class="mouth no-zoom"></div>
+            <span id="score">0</span>
+            <span id="game-over">Game Over<br><button id="restart-btn">Restart</button></span>
+            <div id="flappy-ball">
+                <div class="eye left"><div class="pupil"></div></div>
+                <div class="eye right"><div class="pupil"></div></div>
+                <div class="mouth"></div>
             </div>
         </div>
     </body>
