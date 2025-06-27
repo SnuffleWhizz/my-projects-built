@@ -9,7 +9,7 @@
 body {
     width: 100%;
     height: 100dvh;
-    overflow: hidden;
+    overflow-x: hidden;
     align-content: center;
     justify-content: center;
     background: linear-gradient(135deg, rgb(116, 247, 116), rgb(147, 119, 180));
@@ -25,11 +25,11 @@ h2 {
     display: inline-block;
     padding: 2px 5px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin: 10px auto;
 }
 
 #difficulty {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     gap: 40px;
